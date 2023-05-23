@@ -48,6 +48,11 @@ del categorias
 # scaler = StandardScaler()
 # previsores = scaler.fit_transform(previsores)
 
+# padronização para redes neurais
+# scaler_y = StandardScaler()
+# objetivo = scaler_y.fit_transform(objetivo)
+
+
 # Separando em base de testes e treinamento (usando 25% para teste)
 from sklearn.model_selection import train_test_split
 previsores_treinamento, previsores_teste, objetivo_treinamento, objetivo_teste = train_test_split(previsores, 
