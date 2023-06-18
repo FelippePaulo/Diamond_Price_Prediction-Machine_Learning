@@ -18,9 +18,9 @@ objetivo_treinamento = scaler_y.fit_transform(objetivo_treinamento)
 ################## Regressão com Árvores de Decisão ################## 
 
 from sklearn.svm import SVR
-regressor = SVR(kernel = 'poly', 
+regressor = SVR(kernel = 'rbf', 
                  C = 1, 
-                 gamma = 'scale', 
+                 gamma = 'auto', 
                  epsilon = 0.1)
 
 #  Treinamento
