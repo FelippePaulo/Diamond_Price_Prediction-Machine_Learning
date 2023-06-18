@@ -43,14 +43,16 @@ del categorias
 
 
 # Padronização dos dados
-# from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler
 
-# scaler = StandardScaler()
-# previsores = scaler.fit_transform(previsores)
+scaler = StandardScaler()
+previsores = scaler.fit_transform(previsores)
 
-# padronização para redes neurais
-# scaler_y = StandardScaler()
-# objetivo = scaler_y.fit_transform(objetivo)
+
+
+# padronização para redes neurais (variavel objetivo)
+scaler_y = StandardScaler()
+objetivo = scaler_y.fit_transform(objetivo)
 
 
 # Separando em base de testes e treinamento (usando 25% para teste)

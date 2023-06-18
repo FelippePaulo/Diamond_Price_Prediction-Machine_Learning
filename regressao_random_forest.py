@@ -18,8 +18,8 @@ import numpy as np
 
 from sklearn.ensemble import RandomForestRegressor
 regressor = RandomForestRegressor(n_estimators=100,     # número de árvores
-                                  max_features=5,        # qtd de caracteristicas
-                                  max_depth=7,
+                                  max_features=4,        # qtd de caracteristicas
+                                  max_depth=8,
                                   random_state=0)
 
 #  Treinamento
