@@ -18,7 +18,7 @@ objetivo_treinamento = scaler_y.fit_transform(objetivo_treinamento)
 ################## Regressão com Árvores de Decisão ################## 
 
 from sklearn.svm import SVR
-regressor = SVR(kernel = 'rbf', 
+regressor = SVR(kernel = 'poly', 
                  C = 1, 
                  gamma = 'scale', 
                  epsilon = 0.1)
@@ -29,7 +29,7 @@ regressor.fit(previsores_treinamento, objetivo_treinamento)
 # Teste
 previsoes = regressor.predict(previsores_teste)
 
-previsoes = scaler_y.inverse_transform(previsoes)
+previsoes = scaler_y.inverse_transform(previsoes.reshape(-1,1))
 
 ################## Avaliação dos resultados ################## 
 

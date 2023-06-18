@@ -18,10 +18,10 @@ import numpy as np
 ################## Regressão com Redes Neurais ################## 
 
 from sklearn.neural_network import MLPRegressor
-regressor = MLPRegressor(activation='relu',
+regressor = MLPRegressor(activation='tanh',
                          max_iter=300,
                          verbose=True,
-                         hidden_layer_sizes = (10,9),
+                         hidden_layer_sizes = (20,10,10),
                          random_state=0)
 
 #  Treinamento
@@ -30,7 +30,10 @@ regressor.fit(previsores_treinamento, objetivo_treinamento)
 # Teste
 previsoes = regressor.predict(previsores_teste)
 
-previsoes = scaler_y.inverse_transform(previsoes)
+
+#previsoes = previsoes.reshape(-1,1)
+previsoes = scaler_y.inverse_transform(previsoes.reshape(-1, 1))
+objetivo_teste = scaler_y.inverse_transform(objetivo_teste)
 
 ################## Avaliação dos resultados ################## 
 

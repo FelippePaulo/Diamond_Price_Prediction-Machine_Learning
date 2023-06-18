@@ -51,8 +51,8 @@ previsores = scaler.fit_transform(previsores)
 
 
 # padronização para redes neurais (variavel objetivo)
-scaler_y = StandardScaler()
-objetivo = scaler_y.fit_transform(objetivo)
+# scaler_y = StandardScaler()
+# objetivo = scaler_y.fit_transform(objetivo)
 
 
 # Separando em base de testes e treinamento (usando 25% para teste)
