@@ -15,41 +15,41 @@ import numpy as np
 def mean_absolute_percentage_error(y_true, y_pred): 
     return np.mean(np.abs(((y_true - y_pred) / y_true)) * 100)
 
-##############################################################################
 
-################## Preprocessamento ################## 
+# ################## Preprocessamento ################## 
 
-#Leitura dos dados
-base = pd.read_csv('house_prices.csv')
-base.describe()
+# #Leitura dos dados
+# base = pd.read_csv('house_prices.csv')
+# base.describe()
 
-# Procurando valores inconsistentes
-# Não há valores inconsistentes
+# # Procurando valores inconsistentes
+# # Não há valores inconsistentes
 
-# Procurando as colunas que possuem algum valor faltante
-pd.isnull(base).any()
+# # Procurando as colunas##############################################################################
+#  que possuem algum valor faltante
+# pd.isnull(base).any()
 
-# Separando dados em previsores e classes
-cols_previsores = ['bedrooms','bathrooms','sqft_living', 'sqft_lot', 
-                   'floors', 'waterfront', 'view', 'condition', 'grade', 'sqft_above', 
-                   'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode', 'lat', 'long']
-# Não usarei: date, sqft_living15 e sqft_lot15
+# # Separando dados em previsores e classes
+# cols_previsores = ['bedrooms','bathrooms','sqft_living', 'sqft_lot', 
+#                    'floors', 'waterfront', 'view', 'condition', 'grade', 'sqft_above', 
+#                    'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode', 'lat', 'long']
+# # Não usarei: date, sqft_living15 e sqft_lot15
 
-cols_objetivo = ['price']
-previsores = base[cols_previsores]
-objetivo = base[cols_objetivo]
+# cols_objetivo = ['price']
+# previsores = base[cols_previsores]
+# objetivo = base[cols_objetivo]
 
-# Transforma as variáveis categóricas em valores numéricos   
-#  Todas as variáveis são numéricas
+# # Transforma as variáveis categóricas em valores numéricos   
+# #  Todas as variáveis são numéricas
 
-# Padronização dos dados
-from sklearn.preprocessing import StandardScaler
+# # Padronização dos dados
+# from sklearn.preprocessing import StandardScaler
 
-scaler = StandardScaler()
-previsores = scaler.fit_transform(previsores)
+# scaler = StandardScaler()
+# previsores = scaler.fit_transform(previsores)
 
-scaler_y = StandardScaler()
-objetivo = scaler_y.fit_transform(objetivo)
+# scaler_y = StandardScaler()
+# objetivo = scaler_y.fit_transform(objetivo)
 
 #####################################################################
 ####################### Validação cruzada ###########################
@@ -70,18 +70,18 @@ rmses = []
 mapes = []
 for indice_treinamento, indice_teste in kfold.split(previsores,
                                                     np.zeros(shape=(previsores.shape[0], 1))):    
-    regressor = MLPRegressor(activation='relu',
+    regressor = MLPRegressor(activation='tanh',
                          max_iter=300,
                          verbose=True,
-                         hidden_layer_sizes = (10,9),
+                         hidden_layer_sizes = (10,10,10),
                          random_state=0)
     
     #  Treinamento
     regressor.fit(previsores[indice_treinamento], objetivo[indice_treinamento,0])
     
     previsoes = regressor.predict(previsores[indice_teste])
-    previsoes = scaler_y.inverse_transform(previsoes)
-    objetivo_escala_original = scaler_y.inverse_transform(objetivo[indice_teste,0])
+    previsoes = scaler_y.inverse_transform(previsoes.reshape(-1,1))
+    objetivo_escala_original = scaler_y.inverse_transform(objetivo[indice_teste,0].reshape(-1,1))
     
     score = metrics.r2_score(objetivo_escala_original, previsoes)
     mae = metrics.mean_absolute_error(objetivo_escala_original, previsoes)
@@ -127,8 +127,8 @@ sns.set_style("whitegrid")
 sns.despine(top=True, right=False, left=False, bottom=False, offset=None, trim=False)
 
 previsoes_treinamento = regressor.predict(previsores[indice_treinamento])
-previsoes_treinamento = scaler_y.inverse_transform(previsoes_treinamento)
-objetivo_treinamento = scaler_y.inverse_transform(objetivo[indice_treinamento,0])
+previsoes_treinamento = scaler_y.inverse_transform(previsoes_treinamento.reshape(-1,1))
+objetivo_treinamento = scaler_y.inverse_transform(objetivo[indice_treinamento,0].reshape(-1,1))
 erros_treinamento = (objetivo_treinamento - previsoes_treinamento) / objetivo_treinamento
 erros_teste = (objetivo_escala_original - previsoes) / objetivo_escala_original
 
