@@ -10,36 +10,36 @@ import matplotlib.pyplot as plt
 from sklearn import metrics
 import numpy as np  
 
-################## Preprocessamento ################## 
+# ################## Preprocessamento ################## 
 
-#Leitura dos dados
-base = pd.read_csv('house_prices.csv')
-base.describe()
+# #Leitura dos dados
+# base = pd.read_csv('house_prices.csv')
+# base.describe()
 
-# Procurando valores inconsistentes
-# Não há valores inconsistentes
+# # Procurando valores inconsistentes
+# # Não há valores inconsistentes
 
-# Procurando as colunas que possuem algum valor faltante
-pd.isnull(base).any()
+# # Procurando as colunas que possuem algum valor faltante
+# pd.isnull(base).any()
 
-# Separando dados em previsores e classes
-cols_previsores = ['bedrooms','bathrooms','sqft_living', 'sqft_lot', 
-                   'floors', 'waterfront', 'view', 'condition', 'grade', 'sqft_above', 
-                   'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode', 'lat', 'long']
-# Não usarei: date, sqft_living15 e sqft_lot15
+# # Separando dados em previsores e classes
+# cols_previsores = ['bedrooms','bathrooms','sqft_living', 'sqft_lot', 
+#                    'floors', 'waterfront', 'view', 'condition', 'grade', 'sqft_above', 
+#                    'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode', 'lat', 'long']
+# # Não usarei: date, sqft_living15 e sqft_lot15
 
-cols_objetivo = ['price']
-previsores = base[cols_previsores]
-objetivo = base[cols_objetivo]
+# cols_objetivo = ['price']
+# previsores = base[cols_previsores]
+# objetivo = base[cols_objetivo]
 
-# Transforma as variáveis categóricas em valores numéricos   
-#  Todas as variáveis são numéricas
+# # Transforma as variáveis categóricas em valores numéricos   
+# #  Todas as variáveis são numéricas
 
-# Padronização dos dados
-from sklearn.preprocessing import StandardScaler
+# # Padronização dos dados
+# from sklearn.preprocessing import StandardScaler
 
-scaler = StandardScaler()
-previsores = scaler.fit_transform(previsores)
+# scaler = StandardScaler()
+# previsores = scaler.fit_transform(previsores)
 
 #####################################################################
 ####################### Validação cruzada ###########################
@@ -61,8 +61,8 @@ for indice_treinamento, indice_teste in kfold.split(previsores,
                                                     np.zeros(shape=(previsores.shape[0], 1))):    
     
     regressor = RandomForestRegressor(n_estimators=100,     # número de árvores
-                                  max_features=10, # qtd de caracteristicas
-                                  max_depth=15,
+                                  max_features=5, # qtd de caracteristicas
+                                  max_depth=8,
                                   random_state=0)
     
     #  Treinamento
