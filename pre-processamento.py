@@ -43,10 +43,10 @@ del categorias
 
 
 # Padronização dos dados
-# from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler
 
-# scaler = StandardScaler()
-# previsores = scaler.fit_transform(previsores)
+scaler = StandardScaler()
+previsores = scaler.fit_transform(previsores)
 
 
 

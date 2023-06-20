@@ -10,50 +10,7 @@ import matplotlib.pyplot as plt
 from sklearn import metrics
 import numpy as np  
 
-######################## Funcões úteis #######################################
 
-def mean_absolute_percentage_error(y_true, y_pred): 
-    return np.mean(np.abs(((y_true - y_pred) / y_true)) * 100)
-
-
-# ################## Preprocessamento ################## 
-
-# #Leitura dos dados
-# base = pd.read_csv('house_prices.csv')
-# base.describe()
-
-# # Procurando valores inconsistentes
-# # Não há valores inconsistentes
-
-# # Procurando as colunas##############################################################################
-#  que possuem algum valor faltante
-# pd.isnull(base).any()
-
-# # Separando dados em previsores e classes
-# cols_previsores = ['bedrooms','bathrooms','sqft_living', 'sqft_lot', 
-#                    'floors', 'waterfront', 'view', 'condition', 'grade', 'sqft_above', 
-#                    'sqft_basement', 'yr_built', 'yr_renovated', 'zipcode', 'lat', 'long']
-# # Não usarei: date, sqft_living15 e sqft_lot15
-
-# cols_objetivo = ['price']
-# previsores = base[cols_previsores]
-# objetivo = base[cols_objetivo]
-
-# # Transforma as variáveis categóricas em valores numéricos   
-# #  Todas as variáveis são numéricas
-
-# # Padronização dos dados
-# from sklearn.preprocessing import StandardScaler
-
-# scaler = StandardScaler()
-# previsores = scaler.fit_transform(previsores)
-
-# scaler_y = StandardScaler()
-# objetivo = scaler_y.fit_transform(objetivo)
-
-#####################################################################
-####################### Validação cruzada ###########################
-#####################################################################
 
 # Regressor
 from sklearn.neural_network import MLPRegressor
