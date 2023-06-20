@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun  1 15:54:57 2023
+Created on Mon Jun  1 16:45:12 2023
 
 @author: felippe
 """
@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from sklearn import metrics
 import numpy as np  
 
-# ################## Preprocessamento ################## 
+################## Preprocessamento ################## 
 
 # #Leitura dos dados
 # base = pd.read_csv('house_prices.csv')
@@ -46,7 +46,9 @@ import numpy as np
 #####################################################################
 
 # Regressor
+from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
+poly = PolynomialFeatures(degree = 3)
 
 
 # Divisão dos dados para validação cruzada
@@ -58,14 +60,19 @@ maes = []
 mses = []
 rmses = []
 mapes = []
-for indice_treinamento, indice_teste in kfold.split(previsores,np.zeros(shape=(previsores.shape[0], 1))):    
+for indice_treinamento, indice_teste in kfold.split(previsores,
+                                                    np.zeros(shape=(previsores.shape[0], 1))):    
     
+    poly = PolynomialFeatures(degree = 2)
+    previsores_treinamento_poly = poly.fit_transform(previsores[indice_treinamento])
+    previsores_teste_poly = poly.transform(previsores[indice_teste])
     regressor = LinearRegression()
     
     #  Treinamento
-    regressor.fit(previsores[indice_treinamento], objetivo.iloc[indice_treinamento,0])
+    regressor.fit(previsores_treinamento_poly, objetivo.iloc[indice_treinamento,0])
     
-    previsoes = regressor.predict(previsores[indice_teste])
+    # Teste
+    previsoes = regressor.predict(previsores_teste_poly)
     
     score = metrics.r2_score(objetivo.iloc[indice_teste,0], previsoes)
     mae = metrics.mean_absolute_error(objetivo.iloc[indice_teste,0], previsoes)
@@ -74,10 +81,10 @@ for indice_treinamento, indice_teste in kfold.split(previsores,np.zeros(shape=(p
     mape = metrics.mean_absolute_percentage_error(objetivo.iloc[indice_teste,0], previsoes)
 
     scores.append(score)
+    mapes.append(mape)
     maes.append(mae)
     mses.append(mse)
     rmses.append(rmse)
-    mapes.append(mape)
 
 
 ######################## Resultado final ########################
@@ -94,11 +101,10 @@ maes = np.asarray(maes)
 mae_final_medio = maes.mean()
 mae_final_desvio_padrao = maes.std()
 
-mses = np.asarray(mses)
-mse_final_medio = mses.mean()
-mse_final_desvio_padrao = mses.std()
-
 rmses = np.asarray(rmses)
 rmse_final_medio = rmses.mean()
 rmse_final_desvio_padrao = rmses.std()
 
+mses = np.asarray(mses)
+mse_final_medio = mses.mean()
+mse_final_desvio_padrao = mses.std()
