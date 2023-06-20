@@ -77,6 +77,7 @@ for indice_treinamento, indice_teste in kfold.split(previsores,
     mae = metrics.mean_absolute_error(objetivo.iloc[indice_teste,0], previsoes)
     mse = metrics.mean_squared_error(objetivo.iloc[indice_teste,0], previsoes)
     rmse = np.sqrt(metrics.mean_squared_error(objetivo.iloc[indice_teste,0], previsoes))
+    
 
     scores.append(score)
     maes.append(mae)
@@ -88,7 +89,11 @@ for indice_treinamento, indice_teste in kfold.split(previsores,
 # Métricas médias
 scores = np.asarray(scores)
 score_final_medio = scores.mean()
-score_final_desvio_padrao = scores.std()
+score_final_desvio_padrao = scores.std()]
+    
+mapes = np.asarray(mapes)
+mape_final_medio = mapes.mean()
+mape_final_desvio_padrao = mapes.std()
 
 maes = np.asarray(maes)
 mae_final_medio = maes.mean()
